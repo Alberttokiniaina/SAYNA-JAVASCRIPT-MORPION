@@ -1,44 +1,41 @@
 (function() {
 
     // Récupération des cases à clicker
-    const items = document.getElementsByClassName('grid-item');
+    const items = document.querySelectorAll('grid-item');
+    items = Array.from(items)
+
+    let currentPlayer = "X"
+
+    let winningCombinations = [
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [2,4,6]
+    ]
+
+    function checkForWinner(){
+        winningCombinations.forEach(function(combination){
+            let check = combination.every(idx => items[idx].innerText.trim() == currentPlayer)
+            if(check){
+                highlightItems(combination)
+            }
+        })
+    }
+
+    items.forEach(function(items)){
+        items.addEventListener('click', function()){
+            if(items.innerText.trim() != "") return
+            items.innerText = currentPlayer
+            checkForWinner()
+        }
+    }
 
     function choiseCase(id) {
-        switch (id) {
-            case 'item0':
-                document.getElementById(id).innerHTML='X';
-                break;
-            case 'item1':
-                document.getElementById(id).innerHTML='X';
-                break;
-            case 'item2':
-                document.getElementById(id).innerHTML='X';
-                break;  
-            case 'item3':
-                document.getElementById(id).innerHTML='X';
-                break;
-            case 'item4':
-                document.getElementById(id).innerHTML='X';
-                break;
-            case 'item5':
-                document.getElementById(id).innerHTML='X';
-                break;
-            case 'item6':
-                document.getElementById(id).innerHTML='X';
-                break;
-            case 'item7':
-                document.getElementById(id).innerHTML='X';
-                break;
-            case 'item8':
-                document.getElementById(id).innerHTML='X';
-                break;
-     
-            default:
-                console.log('Mauvais choix');
-        } /*fin switch*/
-     
-        adversaire(this.id); 
-    
+
     }
 
     // Vide le contenu de toute les cases
@@ -50,62 +47,3 @@
     }
 
 })();
-
-
-    
- 
- 
-/* Fonction selection de case Adversaire*/
-function adversaire(id) {
-    var bool = true;
-    var tableau = [];
-    tableau.push(id);
- 
-    while (bool == true) {
-        var nb = Math.floor(Math.random() * 9);
-        var caseAdversaire = 'case'+nb;
- 
-        for(var indice in tableau) {
-            if (caseAdversaire != tableau[indice]) {
-                document.getElementById(caseAdversaire).innerHTML='O';
-                bool = false;	
-            }
-        }
-    }
-    tableau.push(caseAdversaire);
-}
-
-var tableau = [];
- 
-const limiteBoucle = 10;
- 
- 
-function adversaire(id) {
- 
-    var bool = true;
-    var compteur = 0;
- 
-    tableau.push(id);
- 
-    while (bool == true && compteur < limiteBoucle) {
- 
-    	compteur++;
- 
-        var nb = Math.floor(Math.random() * 9);
- 
-        var caseAdversaire = 'case'+nb;
- 
-        if (-1 === tableau.indexOf(caseAdversaire)) {
-        	document.getElementById(caseAdversaire).innerHTML = 'O';
-        	bool = false;
-        }
- 
-    }
- 
-    if (limiteBoucle === compteur) {
-    	console.log("fin de la partie");
-    } else {
-    	tableau.push(caseAdversaire);
-    }
- 
-}
